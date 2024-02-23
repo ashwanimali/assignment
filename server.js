@@ -39,11 +39,10 @@ User.findOne({ role: ROLE_LABLE.ADMIN })
                 email: "admin@gmail.com"
             });
             await newAdmin.generateAuthToken()
-            return newAdmin.save();
+            return newAdmin.save().then(() => {
+                console.log('Admin user added successfully');
+            });
         }
-    })
-    .then(() => {
-        console.log('Admin user added successfully');
     })
     .catch(err => {
         console.error('Error adding admin user:', err);

@@ -7,6 +7,7 @@ let softDelete = require('mongoosejs-soft-delete');
 
 const User = new Schema({
     name: { type: String, trim: true },
+    createdBy: { type: mongoose.Types.ObjectId, ref: 'user' },
     email: { type: String, trim: true, required: true },
     username: { type: String, trim: true, required: true },
     password: { type: String, trim: true, required: true },
@@ -30,7 +31,6 @@ User.pre('save', async function (next) {
 User.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY)
-    console.log({ token })
     user.tokens = user.tokens.concat({ token })
     await user.save()
     return token

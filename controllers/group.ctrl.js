@@ -4,7 +4,6 @@ const Group = require('../models/group-model');
 
 const createGroup = async (req, res) => {
     try {
-        console.log({ user: req.user })
         const groupBody = {
             name: req.body.name,
             createdBy: req.user._id,
@@ -14,7 +13,6 @@ const createGroup = async (req, res) => {
         await group.save()
         res.status(200).send({ message: 'Group Created SuccessFully', data: {} })
     } catch (error) {
-        console.log("err", error)
         return res.status(500).send(error)
     }
 };
